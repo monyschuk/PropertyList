@@ -10,6 +10,7 @@
 		4D99D3DC1B5D2B5D00E63A75 /* PropertyList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99D3DB1B5D2B5D00E63A75 /* PropertyList.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D99D3E31B5D2B5D00E63A75 /* PropertyList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D99D3D81B5D2B5D00E63A75 /* PropertyList.framework */; };
 		4D99D3E81B5D2B5D00E63A75 /* PropertyListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D99D3E71B5D2B5D00E63A75 /* PropertyListTests.swift */; };
+		4D99D3F31B5D2DE200E63A75 /* Plist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D99D3F21B5D2DE200E63A75 /* Plist.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		4D99D3E21B5D2B5D00E63A75 /* PropertyListTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PropertyListTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D99D3E71B5D2B5D00E63A75 /* PropertyListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyListTests.swift; sourceTree = "<group>"; };
 		4D99D3E91B5D2B5D00E63A75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D99D3F21B5D2DE200E63A75 /* Plist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plist.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,8 +73,9 @@
 		4D99D3DA1B5D2B5D00E63A75 /* PropertyList */ = {
 			isa = PBXGroup;
 			children = (
-				4D99D3DB1B5D2B5D00E63A75 /* PropertyList.h */,
 				4D99D3DD1B5D2B5D00E63A75 /* Info.plist */,
+				4D99D3F21B5D2DE200E63A75 /* Plist.swift */,
+				4D99D3DB1B5D2B5D00E63A75 /* PropertyList.h */,
 			);
 			path = PropertyList;
 			sourceTree = "<group>";
@@ -80,8 +83,8 @@
 		4D99D3E61B5D2B5D00E63A75 /* PropertyListTests */ = {
 			isa = PBXGroup;
 			children = (
-				4D99D3E71B5D2B5D00E63A75 /* PropertyListTests.swift */,
 				4D99D3E91B5D2B5D00E63A75 /* Info.plist */,
+				4D99D3E71B5D2B5D00E63A75 /* PropertyListTests.swift */,
 			);
 			path = PropertyListTests;
 			sourceTree = "<group>";
@@ -142,6 +145,7 @@
 		4D99D3CF1B5D2B5D00E63A75 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Mark Onyschuk";
 				TargetAttributes = {
@@ -193,6 +197,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D99D3F31B5D2DE200E63A75 /* Plist.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,6 +307,7 @@
 		4D99D3ED1B5D2B5D00E63A75 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -314,12 +320,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.MarkOnyschuk.PropertyList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		4D99D3EE1B5D2B5D00E63A75 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
