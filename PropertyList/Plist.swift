@@ -45,7 +45,40 @@ public final class Plist {
     private init(value: ValueType) {
         self.value = value
     }
+    
+    /// Creates a Property list object containing the value `date`.
+    public init(date: NSDate) {
+        self.value = .Date(date)
+    }
+    
+    /// Creates a Property list object containing the value `data`.
+    public init(data: NSData) {
+        self.value = .Data(data)
+    }
+    
+    /// Creates a Property list object containing the value `number`.
+    public init(number: NSNumber) {
+        self.value = .Number(number)
+    }
+    
+    /// Creates a Property list object containing the value `string`.
+    public init(string: Swift.String) {
+        self.value = .String(string)
+    }
+    
+    /// Creates a Property list object containing the array `array`.
+    public init(array: [Plist]) {
+        self.value = .Array(array)
+    }
+
+    /// Creates a Property list object containing the dictionary `dictionary`.
+    public init(dictionary: [Swift.String:Plist]) {
+        self.value = .Dictionary(dictionary)
+    }
 }
+
+// MARK: -
+// MARK: Optional Values
 
 public extension Plist {
     /// Optional date value
@@ -109,6 +142,9 @@ public extension Plist {
     }
 }
 
+// MARK: -
+// MARK: Value Types
+
 public extension Plist {
     /// True if the receiver is a plist date
     var isDate: Bool {
@@ -171,6 +207,9 @@ public extension Plist {
     }
 }
 
+// MARK: -
+// MARK: Serialization
+
 public extension Plist {
     /**
     Create a Property list from serialized data
@@ -191,6 +230,9 @@ public extension Plist {
         return try NSPropertyListSerialization.dataWithPropertyList(plist.rawValue, format: format, options: 0)
     }
 }
+
+// MARK: -
+// MARK: Subscripts
 
 // allow both string and integer subscripts
 public protocol PlistSubscript {}
@@ -260,6 +302,9 @@ public extension Plist {
         }
     }
 }
+
+// MARK: -
+// MARK: Protocol Conformances
 
 extension Plist: Swift.SequenceType {
     /// Returns `true` if the receiver is an empty array or dictionary plist type, false otherwise

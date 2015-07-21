@@ -141,4 +141,54 @@ class PropertyListTests: XCTestCase {
         XCTAssertTrue(rawNestedPlist.isEqual(nested))
     }
     
+    func testSerialization() {
+        var errorCount = 0
+        var samplePlists = [Plist]()
+        
+        samplePlists.append([
+            "Name":     "Mark",
+            "Age":      47,
+            "Children": [
+                [
+                    "Name": "Nadia",
+                    "Age": 16,
+                ]
+            ]
+            ])
+        samplePlists.append(12)
+        samplePlists.append(Plist(rawValue: NSData())!)
+        samplePlists.append(Plist(rawValue: NSDate())!)
+        
+        
+        for plist in samplePlists {
+            let serializedData: NSData
+            
+            do {
+                serializedData = try Plist.dataWithPropertyList(plist)
+            } catch let err {
+                errorCount += 1
+                print("caught error \(err)")
+                
+                continue
+            }
+
+            let unserializedPlist: Plist
+
+            do {
+                unserializedPlist = try Plist.propertyListWithData(serializedData)
+
+                if (plist != unserializedPlist) {
+                    errorCount += 1
+                    print("serialization round trip modified plists: orig = \(plist), reconstituted = \(unserializedPlist)")
+                }
+            
+            } catch let err {
+                errorCount += 1
+                print("caught error \(err)")
+            }
+            
+        }
+        
+        XCTAssertTrue(errorCount == 0)
+    }
 }
