@@ -155,27 +155,17 @@ class PropertyListTests: XCTestCase {
                 ]
             ]
             ])
+        
         samplePlists.append(12)
         samplePlists.append(Plist(rawValue: NSData())!)
         samplePlists.append(Plist(rawValue: NSDate())!)
         
         
         for plist in samplePlists {
-            let serializedData: NSData
-            
-            do {
-                serializedData = try Plist.dataWithPropertyList(plist)
-            } catch let err {
-                errorCount += 1
-                print("caught error \(err)")
-                
-                continue
-            }
-
-            let unserializedPlist: Plist
 
             do {
-                unserializedPlist = try Plist.propertyListWithData(serializedData)
+                let serializedData = Plist.dataWithPropertyList(plist)
+                let unserializedPlist = try Plist.propertyListWithData(serializedData)!
 
                 if (plist != unserializedPlist) {
                     errorCount += 1
