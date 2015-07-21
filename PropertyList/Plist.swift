@@ -8,8 +8,21 @@
 
 import Foundation
 
+/**
+A Cocoa Property list.
+
+See [About Property Lists](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/PropertyLists/AboutPropertyLists/AboutPropertyLists.html) on the Apple Developer website for details.
+*/
+
 public final class Plist {
-    enum ValueType {
+    
+    /**
+    Property list compatible types.
+    
+    See [About Property Lists](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/PropertyLists/AboutPropertyLists/AboutPropertyLists.html) on the Apple Developer website for details.
+    */
+    
+    private enum ValueType {
         case Date(NSDate)
         case Data(NSData)
         case Number(NSNumber)
@@ -19,14 +32,23 @@ public final class Plist {
         case Dictionary([Swift.String:Plist])
     }
     
-    var value: ValueType
+    /**
+    Underlying Property list value.
+    */
+    private var value: ValueType
     
-    init(value: ValueType) {
+    /**
+    Creates a Property list object.
+    - parameter value: A property list compatible value type
+    - returns: the created property list object
+    */
+    private init(value: ValueType) {
         self.value = value
     }
 }
 
 public extension Plist {
+    /// Optional date value
     var date: NSDate? {
         switch value {
         case let .Date(value):
@@ -36,6 +58,7 @@ public extension Plist {
         }
     }
     
+    /// Optional data value
     var data: NSData? {
         switch value {
         case let .Data(value):
@@ -45,6 +68,7 @@ public extension Plist {
         }
     }
     
+    /// Optional number value
     var number: NSNumber? {
         switch value {
         case let .Number(value):
@@ -54,6 +78,7 @@ public extension Plist {
         }
     }
     
+    /// Optional string value
     var string: Swift.String? {
         switch value {
         case let .String(value):
@@ -62,25 +87,30 @@ public extension Plist {
             return nil
         }
     }
-    
+
+    /// Optional bool value, non-nil for numeric plist types
     var bool: Swift.Bool? {
         return number?.boolValue
     }
     
+    /// Optional int value, non-nil for numeric plist types
     var int: Swift.Int? {
         return number?.integerValue
     }
     
+    /// Optional float value, non-nil for numeric plist types
     var float: Swift.Float? {
         return number?.floatValue
     }
     
+    /// Optional double value, non-nil for numeric plist types
     var double: Swift.Double? {
         return number?.doubleValue
     }
 }
 
 public extension Plist {
+    /// True if the receiver is a plist date
     var isDate: Bool {
         switch value {
         case .Date(_):
@@ -90,6 +120,7 @@ public extension Plist {
         }
     }
     
+    /// True if the receiver is a plist data
     var isData: Bool {
         switch value {
         case .Data(_):
@@ -99,6 +130,7 @@ public extension Plist {
         }
     }
     
+    /// True if the receiver is a plist number
     var isNumber: Bool {
         switch value {
         case .Number(_):
@@ -108,6 +140,7 @@ public extension Plist {
         }
     }
     
+    /// True if the receiver is a plist string
     var isString: Bool {
         switch value {
         case .String(_):
@@ -117,6 +150,7 @@ public extension Plist {
         }
     }
     
+    /// True if the receiver is a plist array
     var isArray: Bool {
         switch value {
         case .Array(_):
@@ -126,6 +160,7 @@ public extension Plist {
         }
     }
     
+    /// True if the receiver is a plist dictionary
     var isDictionary: Bool {
         switch value {
         case .Dictionary(_):
@@ -137,21 +172,37 @@ public extension Plist {
 }
 
 public extension Plist {
+    /**
+    Create a Property list from serialized data
+    - parameter data: Serialized property list data
+    - returns: the created property list object
+    */
     class func propertyListWithData(data: NSData) throws -> Plist {
         return try Plist(rawValue: NSPropertyListSerialization.propertyListWithData(data, options: [], format: nil))!
     }
+    
+    /**
+    Serialize a Property list to data
+    - parameter plist: The property list to serialize
+    - parameter format: The property list format to serialize to
+    - returns: serialized data
+    */
     class func dataWithPropertyList(plist: Plist, format: NSPropertyListFormat = .BinaryFormat_v1_0) throws -> NSData {
         return try NSPropertyListSerialization.dataWithPropertyList(plist.rawValue, format: format, options: 0)
     }
 }
 
+// allow both string and integer subscripts
 public protocol PlistSubscript {}
 
 extension Swift.Int: PlistSubscript {}
 extension Swift.String: PlistSubscript {}
 
 public extension Plist {
+    
     subscript(key: PlistSubscript) -> Plist? {
+        /// If the receiver is an array plist, returns the plist value at integer subscript `key`.
+        /// If the receiver is a dictionary plist, returns the plist value at string subscript `key`.
         get {
             switch value {
             case let .Array(array):
@@ -171,6 +222,8 @@ public extension Plist {
                 return nil
             }
         }
+        /// If the receiver is an array plist, allows value replacement and removal at integer subscript `key`.
+        /// If the receiver is a dictionary plist, allows value insertion, replacement, and removalat string subscript `key`.
         set(newValue) {
             switch value {
             case let .Array(array) where key is Swift.Int:
@@ -209,6 +262,7 @@ public extension Plist {
 }
 
 extension Plist: Swift.SequenceType {
+    /// Returns `true` if the receiver is an empty array or dictionary plist type, false otherwise
     public var isEmpty: Bool {
         switch value {
         case let .Array(value):
@@ -220,6 +274,7 @@ extension Plist: Swift.SequenceType {
         }
     }
     
+    /// Returns the number of elements in an array or dictionary plist type, `0` otherwise
     public var count: Int {
         switch value {
         case let .Array(value):
@@ -230,6 +285,13 @@ extension Plist: Swift.SequenceType {
             return 0
         }
     }
+    
+    /**
+    If the receiver is an array or dictionary plist type, returns a generator over the receiver's elements,
+    or an empty generator for other types. 
+    
+    - returns: Returns a *generator* over the reecivers contents
+    */
     
     public func generate() -> AnyGenerator<(Swift.String, Plist)> {
         switch value {
@@ -407,7 +469,7 @@ public func ==(lhs: Plist, rhs: Plist) -> Bool {
 }
 
 extension Plist.ValueType: Equatable {}
-func ==(lhs: Plist.ValueType, rhs: Plist.ValueType) -> Bool {
+private func ==(lhs: Plist.ValueType, rhs: Plist.ValueType) -> Bool {
     switch (lhs, rhs) {
     case let (.Date(lhs), .Date(rhs)):
         return lhs.isEqualToDate(rhs)
