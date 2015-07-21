@@ -216,8 +216,8 @@ public extension Plist {
     - parameter data: Serialized property list data
     - returns: the created property list object
     */
-    class func propertyListWithData(data: NSData) throws -> Plist {
-        return try Plist(rawValue: NSPropertyListSerialization.propertyListWithData(data, options: [], format: nil))!
+    class func propertyListWithData(data: NSData) throws -> Plist? {
+        return try Plist(rawValue: NSPropertyListSerialization.propertyListWithData(data, options: [], format: nil))
     }
     
     /**
@@ -226,8 +226,29 @@ public extension Plist {
     - parameter format: The property list format to serialize to
     - returns: serialized data
     */
-    class func dataWithPropertyList(plist: Plist, format: NSPropertyListFormat = .BinaryFormat_v1_0) throws -> NSData {
-        return try NSPropertyListSerialization.dataWithPropertyList(plist.rawValue, format: format, options: 0)
+    class func dataWithPropertyList(plist: Plist, format: NSPropertyListFormat = .BinaryFormat_v1_0) -> NSData {
+        return try! NSPropertyListSerialization.dataWithPropertyList(plist.rawValue, format: format, options: 0)
+    }
+    
+    /**
+    Create a Property list from a serialized property list stored in the file URL `url`.
+    - parameter url: A file URL containing serialized plist data
+    - parameter options: Options used to read data from `url`, defaults to none.
+    - returns: the created property list object
+    */
+    class func propertyListWithContentsOfURL(url: NSURL, options: NSDataReadingOptions = []) throws -> Plist? {
+        return try propertyListWithData(NSData(contentsOfURL: url, options: options))
+    }
+    
+    /**
+    Serialize a Property list to the filesystem at the file URL `url`.
+    - parameter plist: The property list to serialize
+    - parameter url: The file URL where the property list will be stored
+    - parameter format: The property list format to serialize to
+    - parameter options: Options used to write data to `url`.
+    */
+    class func writePropertyListToURL(plist: Plist, url: NSURL, format: NSPropertyListFormat = .BinaryFormat_v1_0, options writeOptionsMask: NSDataWritingOptions = []) throws {
+        try dataWithPropertyList(plist, format: format).writeToURL(url, options: writeOptionsMask)
     }
 }
 
