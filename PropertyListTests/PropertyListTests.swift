@@ -157,8 +157,8 @@ class PropertyListTests: XCTestCase {
             ])
         
         samplePlists.append(12)
-        samplePlists.append(Plist(rawValue: NSData())!)
-        samplePlists.append(Plist(rawValue: NSDate())!)
+        samplePlists.append(Plist(data: NSData()))
+        samplePlists.append(Plist(date: NSDate()))
         
         
         for plist in samplePlists {

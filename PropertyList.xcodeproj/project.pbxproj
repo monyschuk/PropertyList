@@ -106,8 +106,8 @@
 		4D99D3FA1B5E995500E63A75 /* PropertyListMobile */ = {
 			isa = PBXGroup;
 			children = (
-				4D99D3FB1B5E995500E63A75 /* PropertyListMobile.h */,
 				4D99D3FD1B5E995500E63A75 /* Info.plist */,
+				4D99D3FB1B5E995500E63A75 /* PropertyListMobile.h */,
 			);
 			path = PropertyListMobile;
 			sourceTree = "<group>";
@@ -493,6 +493,7 @@
 				4D99D3EE1B5D2B5D00E63A75 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4D99D3EF1B5D2B5D00E63A75 /* Build configuration list for PBXNativeTarget "PropertyListTests" */ = {
 			isa = XCConfigurationList;
@@ -501,6 +502,7 @@
 				4D99D3F11B5D2B5D00E63A75 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4D99D3FE1B5E995500E63A75 /* Build configuration list for PBXNativeTarget "PropertyListMobile" */ = {
 			isa = XCConfigurationList;
@@ -509,6 +511,7 @@
 				4D99D4001B5E995500E63A75 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

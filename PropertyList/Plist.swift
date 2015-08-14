@@ -11,7 +11,8 @@ import Foundation
 /**
 A Cocoa Property list.
 
-See [About Property Lists](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/PropertyLists/AboutPropertyLists/AboutPropertyLists.html) on the Apple Developer website for details.
+See [About Property Lists](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/PropertyLists/AboutPropertyLists/AboutPropertyLists.html) 
+on the Apple Developer website for details.
 */
 
 public final class Plist {
@@ -19,7 +20,8 @@ public final class Plist {
     /**
     Property list compatible types.
     
-    See [About Property Lists](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/PropertyLists/AboutPropertyLists/AboutPropertyLists.html) on the Apple Developer website for details.
+    See [About Property Lists](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/PropertyLists/AboutPropertyLists/AboutPropertyLists.html) 
+    on the Apple Developer website for details.
     */
     
     private enum ValueType {
